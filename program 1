@@ -1,0 +1,114 @@
+Create a department table with the following columns: dept_id (PK), dept_name
+(not null), dept_location.
+
+SQL> create table department108(dept_id varchar(5) primary key,dept_name varchar(10) not null,dept_location varchar(10));
+Table created.
+
+=================================================================================================================================================
+Write a SQL query to create an employee table with the following columns: emp_id
+(PK), emp_name, emp_salary (>20k), emp_join_date (between June 1998- till
+date), dept_id (FK).
+
+create table employee108(emp_id varchar(5) primary key,emp_name varchar(10),emp_salary numeric(12,2) check (emp_salary >20000),
+emp_joindate date check (emp_joindate >= date '1998-06-01'),dept_id varchar(5),foreign key (dept_id) references department108(dept_id));
+Table created.
+
+====================================================================================================================================================
+Create table support table with s_id (PK), emp_id (FK), dept_id (FK), status
+(Yes/No).
+
+SQL> create table support108(s_id varchar(5) primary key,emp_id varchar(5),foreign key (emp_id) references employee108(emp_id),dept_id varchar(5),
+foreign key (dept_id) references department108(dept_id),status varchar(3) check (status in('yes','no')));
+
+Table created.
+====================================================================================================================================================
+Display the schema of the above three tables.
+
+SQL> desc department108;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID				   NOT NULL VARCHAR2(5)
+ DEPT_NAME				   NOT NULL VARCHAR2(10)
+ DEPT_LOCATION					    VARCHAR2(10)
+
+SQL> desc employee108;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID 				   NOT NULL VARCHAR2(5)
+ EMP_NAME					    VARCHAR2(10)
+ EMP_SALARY					    NUMBER(12,2)
+ EMP_JOINDATE					    DATE
+ DEPT_ID					    VARCHAR2(5)
+
+SQL> desc support108;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ S_ID					   NOT NULL VARCHAR2(5)
+ EMP_ID 					    VARCHAR2(5)
+ DEPT_ID					    VARCHAR2(5)
+ STATUS 					    VARCHAR2(3)
+
+===================================================================================================================================================
+Alter the employee table to add a new column emp_email of type VARCHAR(100).
+
+SQL> alter table employee108 add emp_email varchar(100);
+Table altered.
+
+SQL> desc employee108;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID 				   NOT NULL VARCHAR2(5)
+ EMP_NAME					    VARCHAR2(10)
+ EMP_SALARY					    NUMBER(12,2)
+ EMP_JOINDATE					    DATE
+ DEPT_ID					    VARCHAR2(5)
+ EMP_EMAIL					    VARCHAR2(100)
+
+======================================================================================================================================================
+Drop the support table if it is no longer required.
+
+drop table support108;
+Table dropped.
+======================================================================================================================================================
+Modify the emp_salary column in the employee table to allow values up to
+DECIMAL(12, 2).
+
+alter table employee108 modify emp_salary decimal(10,2);
+Table altered.
+
+SQL> desc employee108;
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID 				   NOT NULL VARCHAR2(5)
+ EMP_NAME					    VARCHAR2(10)
+ EMP_SALARY					    NUMBER(10,2)
+ EMP_JOINDATE					    DATE
+ DEPT_ID					    VARCHAR2(5)
+ EMP_EMAIL					    VARCHAR2(100)
+=======================================================================================================================================================
+Add five suitable records to department table (Let value of dept_id starts with 101).
+
+insert into department108 values(101,'cs','north');
+insert into department108 values(102,'EEC','south');
+insert into department108 values(103,'EEE','Elab');
+insert into department108 values(104,'mech','south');
+insert into department108 values(105,'mba','north');
+
+SQL> select * from department108;
+
+DEPT_ DEPT_NAME  DEPT_LOCAT
+----- ---------- ----------
+101   cs	 north
+102   EEC	 south
+103   EEE	 Elab
+104   mech	 south
+105   mba	 north
+==========================================================================================================================================================
+Insert the following employee record into the employee table: emp_id = 1, emp_name
+= 'John Doe', emp_salary = 60000, emp_join_date = '15-05-2021', dept_id
+= 101.
+
+
+
+
+
