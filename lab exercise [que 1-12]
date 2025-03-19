@@ -342,8 +342,34 @@ EMP_I EMP_NAME
 
 9 rows selected.
 ============================================================================================================
+Q29: Create a view high_salary_employees that lists the emp_name and emp_salary of
+employees who earn above 70000.
 
 
+SQL> create view high_salary_employee108 as select emp_name,emp_salary from employee108 where emp_salary > 70000;
+View created.
+================================================================================================================
+Q30: Write a query to view the data from the high_salary_employees view.
+
+SQL> select * from high_salary_employee108;
+EMP_NAME   EMP_SALARY
+---------- ----------
+sona	       200000
+muthu	       170000
+==================================================================================================================
+Q31: Create a view to list employees along with the department name and their salary,
+filtering out employees earning below 50000.
+
+SQL> create view  sona as select e.emp_name, e.emp_salary, d.dept_name from employee108 e
+join department108 d ON e.dept_id = d.dept_id where emp_salary <50000;
+
+View created.
+==================================================================================================================
+Q32: Drop the high_salary_employees view.
+
+SQL> drop view high_salary_employee108;
+View dropped.
+================================================================================================
 
 
 
