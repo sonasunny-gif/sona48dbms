@@ -416,6 +416,7 @@ AVG(EMP_SALARY)
 Q35: Find the employee with the highest salary in each department using MAX().
 
 SQL> select dept_id,emp_name,emp_salary as highest_salary from employee108 where (dept_id,emp_salary) in(select dept_id,max(emp_salary)from employee108 group by dept_id);
+SQL> select dept_id,emp_name,emp_salary as highest_salary from employee108 e1 where emp_salary=(select max(emp_salary)from employee108 where dept_id=e1.dept_id);
 
 DEPT_ EMP_NAME	 HIGHEST_SALARY
 ----- ---------- --------------
