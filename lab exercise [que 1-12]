@@ -277,18 +277,17 @@ DEPT_ TOTAL_EMPLOYEES
 ----- ---------------
 102		    5
 =======================================================================================================================
-Q29: Write a query to find the names of employees who have a salary greater than the
+Q24: Write a query to find the names of employees who have a salary greater than the
 average salary in their department.
 
 SQL> select emp_name from employee108 where emp_salary >(select avg(emp_salary) from employee108 where dept_id = employee108.dept_id);
 
 EMP_NAME
 ----------
-Ann
-Anns
+sona
 muthu
 ========================================================================================================================
-Q30: Select the emp_name and emp_salary of employees who are in departments that are
+Q25: Select the emp_name and emp_salary of employees who are in departments that are
 located in 'Ernakulam'.
 
 SQL> SQL> select emp_name,emp_salary from employee108 where dept_id=(select dept_id from department108 where dept_location='ernakulam');
@@ -300,7 +299,7 @@ sona		30000
 stebin		40000
 Anns		70000
 ==========================================================================================================================
-Q31: Find the emp_name of employees who earn more than the highest salary in department
+Q26: Find the emp_name of employees who earn more than the highest salary in department
 102.
 
 SQL> update employee108 set emp_salary=200000 where emp_id=11;
@@ -313,7 +312,7 @@ EMP_NAME
 ----------
 sona
 =====================================================================================================================
-Q32: Write a query that returns the department name of the department with the highest
+Q27: Write a query that returns the department name of the department with the highest
 total salary.
 
 SQL> select dept_name from department108 where dept_id=(select dept_id from employee108 group by dept_id order by sum(emp_salary)desc fetch first 1 row only);
@@ -323,7 +322,7 @@ DEPT_NAME
 ----------
 EEC
 ========================================================================================================
-Q33: Find the emp_id and emp_name of employees who are working in departments with
+Q28: Find the emp_id and emp_name of employees who are working in departments with
 less than 10 employees.
 
 SQL> select emp_id ,emp_name from employee108 where dept_id in(select dept_id from employee108 group by dept_id having count(*)<10);
@@ -370,7 +369,80 @@ Q32: Drop the high_salary_employees view.
 SQL> drop view high_salary_employee108;
 View dropped.
 ================================================================================================
+Q33: Write a query to find the total salary paid in each department.
 
+SQL> select dept_id,sum(emp_salary) from employee108 group by dept_id; 
+DEPT_ SUM(EMP_SALARY)
+----- ---------------
+101	       310000
+103		50000
+102	       374800
+
+====================================================================================================
+Q34: Use AVG() to find the average salary of employees in the 'Marketing' department.
+
+SQL> select * from department108;
+
+DEPT_ DEPT_NAME  DEPT_LOCAT
+----- ---------- ----------
+101   marketing  ernakulam
+102   EEC	 south
+103   EEE	 Elab
+104   mech	 south
+105   mba	 north
+
+SQL> set linesize 300;
+SQL> select * from employee108;
+
+EMP_I EMP_NAME	 EMP_SALARY EMP_JOIND DEPT_ EMP_EMAIL
+----- ---------- ---------- --------- ----- ----------------------------------------------------------------------------------------------------
+11    sona	     200000 28-MAY-24 101   sona@example.com
+22    sunny	      50000 06-FEB-20 103   sunny@example.com
+33    lilly	      35000 27-MAR-21 102   lilly@example.com
+44    stebin	      40000 31-AUG-22 101   sona@example.com
+101   ichu	      52800 05-MAY-23 102   ichu@example.com
+107   jaiden	      47000 01-AUG-23 102   jaiden@example.com
+99    Ann	      70000 05-APR-23 102   ann@example.com
+98    Anns	      70000 05-APR-23 101   anns@example.com
+100   muthu	     170000 05-APR-23 102   muthu@example.com
+
+9 rows selected.
+SQL> select avg(emp_salary) from employee108 where dept_id=(select dept_id from department108 where dept_name='marketing');
+
+AVG(EMP_SALARY)
+---------------
+     103333.333
+============================================================================================
+Q35: Find the employee with the highest salary in each department using MAX().
+
+SQL> select dept_id,emp_name,emp_salary as highest_salary from employee108 where (dept_id,emp_salary) in(select dept_id,max(emp_salary)from employee108 group by dept_id);
+
+DEPT_ EMP_NAME	 HIGHEST_SALARY
+----- ---------- --------------
+101   sona		  200000
+103   sunny		 50000
+102   muthu		 170000
+
+===========================================================================
+Q36: Write a query that finds the total number of employees in each department.
+
+SQL> select dept_id,count(*) as total_no_employees from employee108 group by dept_id;
+
+DEPT_ TOTAL_NO_EMPLOYEES
+----- ------------------
+101		       3
+103		       1
+102		       5
+===================================================================================
+Q37: Calculate the sum of the salaries of all employees whose emp_salary is greater than
+50000.
+SQL> select sum(emp_salary) as sum_of_salary from employee108 where emp_salary > 50000;
+
+SUM_OF_SALARY
+-------------
+       562800
+
+========================================================================================
 
 
 
